@@ -1,9 +1,34 @@
+from uuid import UUID
+
+from common.exceptions.exceptions import HTTPNotFoundError
+from models.users import User
+
+
 class UserService:
 
-    @staticmethod
-    async def get_all_users(repository, session):
-        return await repository.get_all(session)
+    def __init__(self, user_repository):
+        self._user_repository = user_repository
 
-    @staticmethod
-    async def get_user_by_name(repository, name, session):
-        pass
+    async def get_all_users(self, db_session):
+        return await self._user_repository.get_all(db_session)
+
+    async def get_user_by_sid(self, db_session, sid: UUID):
+        user = await self._user_repository.get(db_session, sid)
+        if user is None:
+            raise HTTPNotFoundError
+        return user
+
+    async def create_user(self, db_session, name, email, password, role):
+        return await self._user_repository.create(
+            db_session, User(name=name, email=email, password=password, role=role)
+        )
+
+    async def update_user(self, db_session, user_sid, changes: dict):
+        db_obj = await self._user_repository.get(db_session, user_sid)
+        db_obj = await self._user_repository.update(db_session, db_obj, changes)
+        return db_obj
+
+    async def remove_user(self, db_session, user_id):
+        user_obj = await self._user_repository.get(db_session, user_id)
+        if user_obj is None:
+            raise HTTPNotFoundError

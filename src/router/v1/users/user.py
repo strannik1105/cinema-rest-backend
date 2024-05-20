@@ -3,10 +3,10 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, Path
 
-from models.users import User
+from common.enums.enums import Role
 from models.users.schemas import user
-from models.users.user_repository import UserRepository
-from router.deps import PGSession, get_user_repository
+from router.deps import PGSession, get_user_service
+from services.users.user_service import UserService
 
 router = APIRouter()
 
@@ -14,51 +14,50 @@ router = APIRouter()
 @router.get("/", response_model=List[user.User])
 async def get_users(
     db: PGSession,
-    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    user_service: Annotated[UserService, Depends(get_user_service)],
 ):
-    db_objs = await user_repository.get_all(db)
+    db_objs = await user_service.get_all_users(db)
     return db_objs
 
 
 @router.get("/{sid}", response_model=user.User)
 async def get_user(
     db: PGSession,
-    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    user_service: Annotated[UserService, Depends(get_user_service)],
     sid: UUID = Path(description="сид пользователя"),
 ):
-    db_obj = await user_repository.get(db, sid)
+    db_obj = await user_service.get_user_by_sid(db, sid)
     return db_obj
 
 
 @router.post("/", response_model=user.User)
 async def create_user(
     db: PGSession,
-    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    user_service: Annotated[UserService, Depends(get_user_service)],
     new_user: user.UserCreate,
 ):
-    obj = User(**new_user.__dict__)
-    db_obj = await user_repository.create(db, obj, with_commit=True)
+    db_obj = await user_service.create_user(
+        db, new_user.name, new_user.email, new_user.password, Role.USER
+    )
     return db_obj
 
 
 @router.put("/{sid}", response_model=user.User)
 async def update_user(
     db: PGSession,
+    user_service: Annotated[UserService, Depends(get_user_service)],
     updated_user: user.UserUpdate,
-    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
     sid: UUID = Path(description="сид пользователя"),
 ):
-    db_obj = await user_repository.get(db, sid)
-    db_obj = await user_repository.update(db, db_obj, updated_user.__dict__)
+    db_obj = await user_service.update_user(db, sid, updated_user.__dict__)
     return db_obj
 
 
 @router.delete("/{sid}")
 async def delete_user(
     db: PGSession,
-    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    user_service: Annotated[UserService, Depends(get_user_service)],
     sid: UUID = Path(description="сид пользователя"),
 ):
-    db_obj = await user_repository.get(db, sid)
-    await user_repository.remove(db, db_obj)
+    await user_service.remove_user(db, sid)
     return {"msg": "success"}

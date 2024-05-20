@@ -14,3 +14,9 @@ class User(BaseModel):
     email = mapped_column(String, nullable=False)
     password = mapped_column(String, nullable=False)
     role = mapped_column(Enum(Role, name="role"))
+
+    def __init__(self, name, email, password, role):
+        self.name = name
+        self.email = email
+        self.password = password
+        self.role = role
