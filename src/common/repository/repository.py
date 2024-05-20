@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from common.base.singleton import Singleton
 
 
-class Repository[T](metaclass=Singleton):
+class AbstractRepository[T](metaclass=Singleton):
     def __init__(self, t_model: type(T)):
         self._t_model = t_model
 
