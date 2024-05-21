@@ -24,20 +24,8 @@ from services.movies.movies_service import MovieService
 router = APIRouter()
 
 
-@router.get("/", response_model=List[MovieImageSchema])
+@router.get("/{sid}", response_model=List[MovieImageSchema])
 async def get_images(
-    db: PGSession,
-    movie_image_repository: Annotated[
-        MovieImageRepository, Depends(get_movie_image_repository)
-    ],
-    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-):
-    db_objs = await crud_service.get_all(db, movie_image_repository)
-    return db_objs
-
-
-@router.get("/{sid}", response_model=MovieImageSchema)
-async def get_image(
     db: PGSession,
     movie_image_repository: Annotated[
         MovieImageRepository, Depends(get_movie_image_repository)
@@ -45,8 +33,13 @@ async def get_image(
     crud_service: Annotated[CRUDService, Depends(get_crud_service)],
     sid: UUID = Path(description="сид пользователя"),
 ):
-    db_obj = await crud_service.get_by_sid(db, movie_image_repository, sid)
-    return db_obj
+    db_objs = await crud_service.get_all(db, movie_image_repository)
+    objs_to_repr = []
+    for obj_ in db_objs:
+        if obj_.movie_sid == sid:
+            objs_to_repr.append(obj_)
+
+    return db_objs
 
 
 @router.post("/{sid}", response_model=MovieImageSchema)

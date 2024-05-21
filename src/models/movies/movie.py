@@ -17,8 +17,6 @@ class Movie(BaseModel):
     description = mapped_column(String, nullable=False)
     genre = mapped_column(String, nullable=False)
 
-    images = relationship("Image")
-
     def __init__(self, name, description, genre):
         self.name = name
         self.description = description
