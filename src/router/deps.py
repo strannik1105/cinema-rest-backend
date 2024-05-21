@@ -27,7 +27,7 @@ def get_auth_repository() -> AuthRepository:
     return auth_repository
 
 
-auth_service = AuthService(auth_repository)
+auth_service = AuthService(user_repository)
 
 
 def get_user_service() -> UserService:

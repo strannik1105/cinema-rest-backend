@@ -2,7 +2,6 @@ from uuid import UUID
 
 from common.exceptions.exceptions import HTTPNotFoundError
 from models.users import User
-from auth import utils as auth_utils
 
 
 class UserService:
@@ -20,9 +19,8 @@ class UserService:
         return user
 
     async def create_user(self, db_session, name, email, password, role):
-        hashed_password = auth_utils.hash_password(password).decode('utf-8')
         return await self._user_repository.create(
-            db_session, User(name=name, email=email, password=hashed_password, role=role)
+            db_session, User(name=name, email=email, password=password, role=role)
         )
 
     async def update_user(self, db_session, user_sid, changes: dict):

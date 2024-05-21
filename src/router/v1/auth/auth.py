@@ -1,18 +1,13 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path, Form
-from pydantic import BaseModel
 
 from router.deps import PGSession, get_auth_service
+from router.v1.auth.schemas import TokenInfo
 from services.auth.auth_service import AuthService
 from auth import utils as auth_utils
 
 router = APIRouter()
-
-
-class TokenInfo(BaseModel):
-    access_token: str
-    token_type: str
 
 
 @router.post('/login/{username}', response_model=TokenInfo)
