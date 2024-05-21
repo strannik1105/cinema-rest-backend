@@ -2,11 +2,11 @@ from sqlalchemy import String
 from sqlalchemy.orm import mapped_column
 from common.db.base_model import BaseModel
 
-SCHEMA = "movies"
+SCHEMA = "food"
 
 
-class Movie(BaseModel):
-    __tablename__ = "movie"
+class Food(BaseModel):
+    __tablename__ = "food"
     __table_args__ = {
         "schema": SCHEMA,
         "comment": "Table with all users",

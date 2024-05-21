@@ -11,7 +11,7 @@ from router.deps import (
     get_crud_service,
     get_movie_repository,
 )
-from router.v1.movies.schemas import MovieSchema, MovieUpdateSchema
+from router.v1.movies.schemas import MovieSchema, MovieUpdateSchema, MovieBaseSchema
 from services.crud_service.crud_service import CRUDService
 
 router = APIRouter()
@@ -43,7 +43,7 @@ async def create_movie(
     db: PGSession,
     movie_repository: Annotated[MovieRepository, Depends(get_movie_repository)],
     crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-    new_movie: MovieUpdateSchema,
+    new_movie: MovieBaseSchema,
 ):
     db_obj = await crud_service.create(
         db,
@@ -63,7 +63,7 @@ async def update_user(
     db: PGSession,
     movie_repository: Annotated[MovieRepository, Depends(get_movie_repository)],
     crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-    updated_user: user.UserUpdate,
+    updated_user: MovieUpdateSchema,
     sid: UUID = Path(description="сид пользователя"),
 ):
     db_obj = await crud_service.update(db, sid, movie_repository, updated_user.__dict__)
