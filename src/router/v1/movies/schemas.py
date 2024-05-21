@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID
 
-from fastapi import UploadFile
+from fastapi import UploadFile, File
 from pydantic import BaseModel
 
 
@@ -14,7 +14,7 @@ class MovieImageSchema(BaseModel):
 class MovieImageCreateSchema(BaseModel):
     name: str
     select_as_title: bool = False
-    image: UploadFile
+    image: UploadFile = File(...)
 
 
 class MovieImageUpdateSchema(BaseModel):
