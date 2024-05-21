@@ -8,17 +8,11 @@ from models.movies.repository.movie_repository import MovieRepository
 from models.users.schemas import user
 from router.deps import (
     PGSession,
-    get_user_service,
-    get_movie_service,
     get_crud_service,
     get_movie_repository,
 )
-from router.v1.auth.auth import TokenInfo
 from router.v1.movies.schemas import MovieSchema, MovieUpdateSchema
 from services.crud_service.crud_service import CRUDService
-from services.movies.movies_service import MovieService
-from services.users.user_service import UserService
-from auth import utils as auth_utils
 
 router = APIRouter()
 

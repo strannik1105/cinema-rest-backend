@@ -16,3 +16,19 @@ class MovieUpdateSchema(BaseModel):
     description: Optional[str]
     genre: Optional[str]
     images: Optional[UploadFile]
+
+
+class MovieImageSchema(BaseModel):
+    name: str
+    path: str
+    select_as_title: bool
+
+
+class MovieImageCreateSchema(BaseModel):
+    name: str
+    select_as_title: bool = False
+    image: UploadFile
+
+
+class MovieImageUpdateSchema(BaseModel):
+    select_as_title: bool = False

@@ -19,7 +19,8 @@ class MovieImage(BaseModel):
 
     movie_sid = mapped_column(ForeignKey("movies.movie.sid"))
 
-    def __init__(self, name, path, movie_sid):
+    def __init__(self, name, path, select_as_title, movie_sid):
         self.name = name
         self.path = path
+        self.select_as_title = select_as_title
         self.movie_sid = movie_sid
