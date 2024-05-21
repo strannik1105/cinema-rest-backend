@@ -6,7 +6,9 @@ from fastapi import APIRouter, Depends, Path
 from common.enums.enums import Role
 from models.users.schemas import user
 from router.deps import PGSession, get_user_service
+from router.v1.auth.auth import TokenInfo
 from services.users.user_service import UserService
+from auth import utils as auth_utils
 
 router = APIRouter()
 
@@ -30,7 +32,7 @@ async def get_user(
     return db_obj
 
 
-@router.post("/", response_model=user.User)
+@router.post("/", response_model=TokenInfo)
 async def create_user(
     db: PGSession,
     user_service: Annotated[UserService, Depends(get_user_service)],
@@ -39,7 +41,14 @@ async def create_user(
     db_obj = await user_service.create_user(
         db, new_user.name, new_user.email, new_user.password, Role.USER
     )
-    return db_obj
+    jwt_payload = {
+        "username": db_obj.name,
+    }
+    token = auth_utils.encode_jwt(jwt_payload)
+    return TokenInfo(
+        access_token=token,
+        token_type="Bearer",
+    )
 
 
 @router.put("/{sid}", response_model=user.User)
