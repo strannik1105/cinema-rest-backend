@@ -37,4 +37,6 @@ POSTGRES_USER: str = os.getenv("POSTGRES_USER", "user")
 POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "password")
 POSTGRES_HOST: str = os.getenv("POSTGRES_HOST", get_local_host())
 POSTGRES_PORT: int = int(os.getenv("POSTGRES_PORT", "5432"))
+FILE_PATH: str = os.getenv("FILE_PATH", "../static")
+
 auth_jwt = AuthJwt()

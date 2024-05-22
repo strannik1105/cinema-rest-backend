@@ -2,6 +2,7 @@ import uuid
 
 from fastapi import UploadFile
 
+import settings
 from models.movies import MovieImage
 
 
@@ -20,7 +21,7 @@ class MovieService:
     ):
         filename = uuid.uuid4().hex
         image_type = image.filename.split(".")[-1]
-        file_path = f"static/{filename}"
+        file_path = f"{settings.FILE_PATH}/{filename}"
         with open(file_path, "wb") as f:
             f.write(image.file.read())
 

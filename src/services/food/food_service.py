@@ -2,6 +2,7 @@ import uuid
 
 from fastapi import UploadFile
 
+import settings
 from models.food.food_image import FoodImage
 
 
@@ -11,15 +12,15 @@ class FoodService:
         self._food_image_repository = food_image_repository
 
     def create_food_image(
-        self,
-        db_session,
-        name: str,
-        select_as_title: bool,
-        movie_sid: uuid.UUID,
-        image: UploadFile,
+            self,
+            db_session,
+            name: str,
+            select_as_title: bool,
+            movie_sid: uuid.UUID,
+            image: UploadFile,
     ):
         filename = uuid.uuid4().hex
-        file_path = f"static/{filename}"
+        file_path = f"{settings.FILE_PATH}/{filename}"
         with open(file_path, "wb") as f:
             f.write(image.file.read())
 
