@@ -7,6 +7,8 @@ from models.food.repository.food_image_repository import FoodImageRepository
 from models.food.repository.food_repository import FoodRepository
 from models.movies.repository.movie_image_repository import MovieImageRepository
 from models.movies.repository.movie_repository import MovieRepository
+from models.rooms.repository.booking_repository import BookingRepository
+from models.rooms.repository.room_repository import RoomRepository
 from models.users.auth_repository import AuthRepository
 from models.users.user_repository import UserRepository
 from services.auth.auth_service import AuthService
@@ -25,7 +27,6 @@ def get_user_repository() -> UserRepository:
 
 
 user_service = UserService(user_repository)
-
 
 auth_repository = AuthRepository()
 
@@ -88,3 +89,15 @@ food_service = FoodService(food_repository, food_image_repository)
 
 def get_food_service() -> FoodService:
     return food_service
+
+
+room_repository = RoomRepository()
+booking_repository = BookingRepository()
+
+
+def get_room_repository() -> RoomRepository:
+    return room_repository
+
+
+def get_booking_repository() -> BookingRepository:
+    return booking_repository
