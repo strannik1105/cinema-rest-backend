@@ -57,7 +57,7 @@ async def create_food(
     return db_obj
 
 
-@router.put("/{sid}", response_model=FoodSchema)
+@router.patch("/{sid}", response_model=FoodSchema)
 async def update_food(
         db: PGSession,
         food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
