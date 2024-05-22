@@ -11,7 +11,7 @@ services:
     restart: always
     env_file: .env.local
     ports:
-      - "5432:5432"
+      - "15432:5432"
 
   cinema-rest-backend:
     container_name: cinema-rest-backend
