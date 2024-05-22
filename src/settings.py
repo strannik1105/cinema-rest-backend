@@ -9,7 +9,6 @@ load_dotenv(
     os.path.join(os.path.abspath(os.path.join(os.getcwd(), os.pardir)), ".env.local")
 )
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -30,7 +29,7 @@ def get_local_host():
             raise OSError("Unsupported platform")
 
 
-HOST = os.getenv("HOST", get_local_host())
+HOST = get_local_host()
 PORT: int = int(os.getenv("PORT", 8000))
 
 POSTGRES_DB: str = os.getenv("POSTGRES_DB", "events")

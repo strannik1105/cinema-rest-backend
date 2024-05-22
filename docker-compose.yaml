@@ -12,3 +12,13 @@ services:
     env_file: .env.local
     ports:
       - "5432:5432"
+
+  cinema-rest-backend:
+    container_name: cinema-rest-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file: .env.local
+    ports:
+      - "8000:8000"
