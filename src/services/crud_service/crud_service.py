@@ -32,4 +32,5 @@ class CRUDService[T]:
         db_obj = await repository.get(db_session, sid)
         if db_obj is None:
             raise HTTPNotFoundError
-        await db_session.delete(db_obj)
+        await repository.remove(db_session, db_obj)
+
