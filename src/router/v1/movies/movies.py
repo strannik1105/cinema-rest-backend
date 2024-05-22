@@ -58,7 +58,7 @@ async def create_movie(
     return db_obj
 
 
-@router.put("/{sid}", response_model=user.User)
+@router.patch("/{sid}", response_model=MovieSchema)
 async def update_user(
     db: PGSession,
     movie_repository: Annotated[MovieRepository, Depends(get_movie_repository)],
@@ -66,7 +66,7 @@ async def update_user(
     updated_user: MovieUpdateSchema,
     sid: UUID = Path(description="сид пользователя"),
 ):
-    db_obj = await crud_service.update(db, sid, movie_repository, updated_user.__dict__)
+    db_obj = await crud_service.update(db, movie_repository, sid, updated_user.__dict__)
     return db_obj
 
 

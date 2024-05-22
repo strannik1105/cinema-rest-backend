@@ -61,7 +61,7 @@ async def create(
     return db_obj
 
 
-@router.put("/{sid}", response_model=RoomSchema)
+@router.patch("/{sid}", response_model=RoomSchema)
 async def update(
         db: PGSession,
         repository: Annotated[RoomRepository, Depends(get_room_repository)],
