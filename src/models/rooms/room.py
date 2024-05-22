@@ -21,9 +21,10 @@ class Room(BaseModel):
     width = mapped_column(Float, nullable=True)
     height = mapped_column(Float, nullable=True)
 
-    def __init__(self, name, description, x, y, width, height):
+    def __init__(self, name, description, cost_per_hour, x, y, width, height):
         self.name = name
         self.description = description
+        self.cost_per_hour = cost_per_hour
         self.x = x
         self.y = y
         self.width = width
