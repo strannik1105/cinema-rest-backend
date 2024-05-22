@@ -9,3 +9,5 @@ UnauthorizedError = HTTPException(
 ImageUploadError = HTTPException(
     status_code=403, detail="Some troubles with image uploading"
 )
+
+AlreadyBookedError = HTTPException(status_code=403, detail="This time range is already booked")

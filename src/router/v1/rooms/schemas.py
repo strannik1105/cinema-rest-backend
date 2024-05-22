@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
@@ -15,4 +16,15 @@ class RoomBaseSchema(BaseModel):
 
 
 class RoomSchema(RoomBaseSchema):
+    sid: UUID
+
+
+class BookingBaseSchema(BaseModel):
+    room_sid: UUID
+    user_sid: UUID
+    datetime_start: datetime
+    datetime_end: datetime
+
+
+class BookingSchema(BookingBaseSchema):
     sid: UUID

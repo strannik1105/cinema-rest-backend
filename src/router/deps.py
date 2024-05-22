@@ -12,6 +12,7 @@ from models.rooms.repository.room_repository import RoomRepository
 from models.users.auth_repository import AuthRepository
 from models.users.user_repository import UserRepository
 from services.auth.auth_service import AuthService
+from services.booking_service.booking_service import BookingService
 from services.crud_service.crud_service import CRUDService
 from services.food.food_service import FoodService
 from services.movies.movies_service import MovieService
@@ -101,3 +102,10 @@ def get_room_repository() -> RoomRepository:
 
 def get_booking_repository() -> BookingRepository:
     return booking_repository
+
+
+booking_service = BookingService(booking_repository, room_repository)
+
+
+def get_booking_service() -> BookingService:
+    return booking_service
