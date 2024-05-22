@@ -1,7 +1,7 @@
 from typing import List, Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Path
+from fastapi import APIRouter, Depends, Path, UploadFile
 
 from models.movies.repository.movie_image_repository import MovieImageRepository
 from models.movies.repository.movie_repository import MovieRepository
@@ -42,15 +42,15 @@ async def get_images(
     return db_objs
 
 
-@router.post("/{sid}", response_model=MovieImageSchema)
+@router.post("/{sid}")
 async def create_image(
     db: PGSession,
     movie_service: Annotated[MovieService, Depends(get_movie_service)],
-    new_movie: MovieImageCreateSchema,
+    new_movie: UploadFile,
     sid: UUID = Path(description="сид фильма"),
 ):
     db_obj = await movie_service.create_movie_image(
-        db, new_movie.name, new_movie.select_as_title, sid, new_movie.image
+        db, True, sid, new_movie
     )
     return db_obj
 
