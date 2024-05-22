@@ -9,7 +9,6 @@ Create Date: 2024-05-21 23:53:31.274768
 from alembic import op
 import sqlalchemy as sa
 
-
 # revision identifiers, used by Alembic.
 revision = "48c06cddbe4d"
 down_revision = "72aa0df75b91"
@@ -25,7 +24,7 @@ def upgrade() -> None:
         "movie",
         sa.Column("name", sa.String(), nullable=False),
         sa.Column("description", sa.String(), nullable=False),
-        sa.Column("genre", sa.String(), nullable=False),
+        sa.Column("price", sa.Float(), nullable=False),
         sa.Column("sid", sa.UUID(), nullable=False),
         sa.PrimaryKeyConstraint("sid"),
         schema="movies",

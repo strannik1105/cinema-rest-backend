@@ -1,4 +1,4 @@
-from sqlalchemy import String
+from sqlalchemy import String, Float
 from sqlalchemy.orm import mapped_column
 from common.db.base_model import BaseModel
 
@@ -15,9 +15,9 @@ class Food(BaseModel):
 
     name = mapped_column(String, nullable=False)
     description = mapped_column(String, nullable=False)
-    genre = mapped_column(String, nullable=False)
+    price = mapped_column(Float, nullable=False)
 
-    def __init__(self, name, description, genre):
+    def __init__(self, name, description, price):
         self.name = name
         self.description = description
-        self.genre = genre
+        self.price = price

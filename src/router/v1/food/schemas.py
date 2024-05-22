@@ -24,7 +24,7 @@ class FoodImageUpdateSchema(BaseModel):
 class FoodBaseSchema(BaseModel):
     name: str
     description: Optional[str]
-    genre: Optional[str]
+    price: Optional[float]
 
 
 class FoodSchema(FoodBaseSchema):
@@ -34,4 +34,4 @@ class FoodSchema(FoodBaseSchema):
 class FoodUpdateSchema(BaseModel):
     name: Optional[str]
     description: Optional[str]
-    genre: Optional[str]
+    price: Optional[float]
