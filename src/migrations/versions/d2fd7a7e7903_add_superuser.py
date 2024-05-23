@@ -17,7 +17,8 @@ depends_on = None
 
 def upgrade() -> None:
     op.execute(
-        "INSERT INTO users.user (sid, name, email, password, role) VALUES ('cc859d7c-3fbf-4d89-ad81-1a31bbeebd42', 'root', 'root@root.com', '$2b$12$.PzoY1uUccOxI/A.CB1wteutIjF853LXRDPkR89Y.WPa0jDc4/1OC', 'ADMIN'::role) ON CONFLICT DO NOTHING")
+        "INSERT INTO users.user (sid, name, email, password, role) VALUES ('cc859d7c-3fbf-4d89-ad81-1a31bbeebd42', 'root', 'root@root.com', '$2b$12$.PzoY1uUccOxI/A.CB1wteutIjF853LXRDPkR89Y.WPa0jDc4/1OC', 'ADMIN'::role) ON CONFLICT DO NOTHING"
+    )
 
 
 def downgrade() -> None:
