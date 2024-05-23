@@ -9,6 +9,8 @@ from models.movies.repository.movie_image_repository import MovieImageRepository
 from models.movies.repository.movie_repository import MovieRepository
 from models.rooms.repository.booking_repository import BookingRepository
 from models.rooms.repository.room_repository import RoomRepository
+from models.staff.repository.cook_repository import CookRepository
+from models.staff.repository.waiter_repository import WaiterRepository
 from models.users.auth_repository import AuthRepository
 from models.users.user_repository import UserRepository
 from services.auth.auth_service import AuthService
@@ -109,3 +111,15 @@ booking_service = BookingService(booking_repository, room_repository)
 
 def get_booking_service() -> BookingService:
     return booking_service
+
+
+cook_repository = CookRepository()
+waiter_repository = WaiterRepository()
+
+
+def get_cook_repository() -> CookRepository:
+    return cook_repository
+
+
+def get_waiter_repository() -> WaiterRepository:
+    return waiter_repository
