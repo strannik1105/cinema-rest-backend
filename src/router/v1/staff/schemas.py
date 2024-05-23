@@ -10,3 +10,12 @@ class WaiterBaseSchema(BaseModel):
 
 class WaiterSchema(WaiterBaseSchema):
     sid: UUID
+
+
+class CookBaseSchema(BaseModel):
+    name: str
+    surname: str
+
+
+class CookSchema(WaiterBaseSchema):
+    sid: UUID
