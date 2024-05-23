@@ -63,7 +63,7 @@ async def update(
         updated_obj: CookBaseSchema,
         sid: UUID = Path(description="сид сущности"),
 ):
-    db_obj = await crud_service.update(db, sid, repository, updated_obj.__dict__)
+    db_obj = await crud_service.update(db, repository, sid, updated_obj.__dict__)
     return db_obj
 
 
