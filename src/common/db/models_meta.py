@@ -8,5 +8,7 @@ from models.food.food import Food  # noqa
 from models.food.food_image import FoodImage  # noqa
 from models.rooms.room import Room  # noqa
 from models.rooms.booking import Booking  # noqa
+from models.staff.cook import Cook  # noqa
+from models.staff.waiter import Waiter  # noqa
 
 metadata = BaseModel.metadata
