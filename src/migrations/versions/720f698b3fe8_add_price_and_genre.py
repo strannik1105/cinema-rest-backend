@@ -21,5 +21,5 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.drop_column("movie", "genre", schema="genre")
+    op.drop_column("movie", "genre", schema="movies")
     op.drop_column("food", "price", schema="food")
