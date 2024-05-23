@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: always
-    env_file: .env.local
+    env_file: .env.deploy
     ports:
       - "15432:5432"
     networks:
@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
-    env_file: .env.local
+    env_file: .env.deploy
     ports:
       - "8000:8000"
     networks:
