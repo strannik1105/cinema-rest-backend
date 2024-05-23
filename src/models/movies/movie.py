@@ -15,7 +15,7 @@ class Movie(BaseModel):
 
     name = mapped_column(String, nullable=False)
     description = mapped_column(String, nullable=False)
-    genre = mapped_column(String, nullable=False)
+    genre = mapped_column(String)
 
     def __init__(self, name, description, genre):
         self.name = name
