@@ -52,6 +52,7 @@ async def create_food(
             "name": new_food.name,
             "description": new_food.description,
             "price": new_food.price,
+            "recipe": new_food.recipe
         },
     )
     return db_obj
@@ -63,7 +64,7 @@ async def update_food(
         food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
         crud_service: Annotated[CRUDService, Depends(get_crud_service)],
         updated_obj: FoodUpdateSchema,
-        sid: UUID = Path(description="сид пользователя"),
+        sid: UUID = Path(description="сид сущности"),
 ):
     db_obj = await crud_service.update(db, sid, food_repository, updated_obj.__dict__)
     return db_obj
