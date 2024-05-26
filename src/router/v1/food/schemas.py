@@ -25,6 +25,7 @@ class FoodBaseSchema(BaseModel):
     name: str
     description: Optional[str]
     price: Optional[float]
+    recipe: Optional[str]
 
 
 class FoodSchema(FoodBaseSchema):
