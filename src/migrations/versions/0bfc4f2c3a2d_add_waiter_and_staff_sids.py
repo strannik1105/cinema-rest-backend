@@ -21,59 +21,59 @@ def upgrade() -> None:
     op.add_column("food", Column("recipe", sa.String, nullable=True), schema="food")
 
     op.add_column(
-        "food",
+        "booking",
         sa.Column(
             "waiter_sid",
             postgresql.UUID(as_uuid=True),
             nullable=True,
         ),
-        schema="food",
+        schema="rooms",
     )
     op.create_foreign_key(
-        "food_waiter_sid_fkey",
-        "food",
+        "booking_waiter_sid_fkey",
+        "booking",
         "waiter",
         ["waiter_sid"],
         ["sid"],
-        source_schema="food",
+        source_schema="rooms",
         referent_schema="staff",
     )
 
     op.add_column(
-        "food",
+        "booking",
         sa.Column(
             "cook_sid",
             postgresql.UUID(as_uuid=True),
             nullable=True,
         ),
-        schema="food",
+        schema="rooms",
     )
     op.create_foreign_key(
-        "food_cook_sid_fkey",
-        "food",
+        "booking_cook_sid_fkey",
+        "booking",
         "cook",
         ["cook_sid"],
         ["sid"],
-        source_schema="food",
+        source_schema="rooms",
         referent_schema="staff",
     )
 
 
 def downgrade() -> None:
     op.drop_constraint(
-        "food_waiter_sid_fkey",
-        "food",
-        schema="food",
+        "booking_waiter_sid_fkey",
+        "booking",
+        schema="rooms",
         type_="foreignkey",
     )
-    op.drop_column("food", "waiter_sid", schema="food")
+    op.drop_column("booking", "waiter_sid", schema="rooms")
 
     op.drop_constraint(
-        "food_cook_sid_fkey",
-        "food",
-        schema="food",
+        "booking_cook_sid_fkey",
+        "booking",
+        schema="rooms",
         type_="foreignkey",
     )
-    op.drop_column("food", "cook_sid", schema="food")
+    op.drop_column("booking", "cook_sid", schema="rooms")
 
     op.drop_column("food", "recipe", schema="food")
