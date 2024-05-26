@@ -1,3 +1,4 @@
+import base64
 from typing import List, Annotated
 from uuid import UUID
 
@@ -24,7 +25,7 @@ from services.movies.movies_service import MovieService
 router = APIRouter()
 
 
-@router.get("/{sid}", response_model=List[MovieImageSchema])
+@router.get("/{sid}")
 async def get_images(
         db: PGSession,
         movie_image_repository: Annotated[
@@ -37,20 +38,23 @@ async def get_images(
     objs_to_repr = []
     for obj_ in db_objs:
         if obj_.movie_sid == sid:
+            obj_.file = "data:image/png;base64,"
+            with open(obj_.path, "rb") as image_file:
+                obj_.file += base64.b64encode(image_file.read()).decode('utf-8')
             objs_to_repr.append(obj_)
 
-    return db_objs
+    return objs_to_repr
 
 
 @router.post("/{sid}", response_model=MovieImageSchema)
 async def create_image(
         db: PGSession,
         movie_service: Annotated[MovieService, Depends(get_movie_service)],
-        new_movie: MovieImageCreateSchema,
+        new_movie_image: UploadFile,
         sid: UUID = Path(description="сид фильма"),
 ):
     db_obj = await movie_service.create_movie_image(
-        db, new_movie.name, new_movie.select_as_title, sid, new_movie.image
+        db, True, sid, new_movie_image
     )
     return db_obj
 
