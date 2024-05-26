@@ -18,6 +18,9 @@ class Booking(BaseModel):
     datetime_start = mapped_column(DateTime, nullable=False)
     datetime_end = mapped_column(DateTime, nullable=False)
 
+    waiter_sid = mapped_column(ForeignKey("staff.waiter.sid"))
+    cook_sid = mapped_column(ForeignKey("staff.cook.sid"))
+
     def __init__(self, room_sid, user_sid, datetime_start, datetime_end):
         self.room_sid = room_sid
         self.user_sid = user_sid

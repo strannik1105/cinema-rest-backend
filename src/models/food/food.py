@@ -18,9 +18,6 @@ class Food(BaseModel):
     price = mapped_column(Float, nullable=False)
     recipe = mapped_column(String, nullable=True)
 
-    waiter_sid = mapped_column(ForeignKey("staff.waiter.sid"))
-    cool_sid = mapped_column(ForeignKey("staff.cook.sid"))
-
     def __init__(self, name, description, price, recipe):
         self.name = name
         self.description = description
