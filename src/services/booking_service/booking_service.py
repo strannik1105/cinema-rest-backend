@@ -17,11 +17,11 @@ from services.booking_service.ext import get_available_staff
 
 class BookingService:
     def __init__(
-        self,
-        booking_repository: BookingRepository,
-        room_repository: RoomRepository,
-        cook_repository: CookRepository,
-        waiter_repository: WaiterRepository,
+            self,
+            booking_repository: BookingRepository,
+            room_repository: RoomRepository,
+            cook_repository: CookRepository,
+            waiter_repository: WaiterRepository,
     ):
         self._booking_repository = booking_repository
         self._room_repository = room_repository
@@ -29,12 +29,12 @@ class BookingService:
         self._waiter_repository = waiter_repository
 
     async def create_booking(
-        self,
-        db_session,
-        room_sid: UUID,
-        user_sid: UUID,
-        datetime_start: datetime,
-        datetime_end: datetime,
+            self,
+            db_session,
+            room_sid: UUID,
+            user_sid: UUID,
+            datetime_start: datetime,
+            datetime_end: datetime,
     ):
         db_room = await self._room_repository.get(db_session, room_sid)
         if db_room is None:
@@ -45,7 +45,7 @@ class BookingService:
         for booking in db_bookings:
             if booking.room_sid == room_sid:
                 if time_in_range(
-                    booking.datetime_start, booking.datetime_end, datetime_start
+                        booking.datetime_start, booking.datetime_end, datetime_start
                 ) and time_in_range(
                     booking.datetime_start, booking.datetime_end, datetime_end
                 ):
