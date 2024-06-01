@@ -9,6 +9,7 @@ class FoodImageSchema(BaseModel):
     name: str
     path: str
     select_as_title: bool
+    file: str
 
 
 class FoodImageCreateSchema(BaseModel):
@@ -36,3 +37,4 @@ class FoodUpdateSchema(BaseModel):
     name: Optional[str]
     description: Optional[str]
     price: Optional[float]
+    recipe: Optional[str]

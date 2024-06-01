@@ -66,7 +66,7 @@ async def update_food(
     updated_obj: FoodUpdateSchema,
     sid: UUID = Path(description="сид сущности"),
 ):
-    db_obj = await crud_service.update(db, sid, food_repository, updated_obj.__dict__)
+    db_obj = await crud_service.update(db, food_repository, sid, updated_obj.__dict__)
     return db_obj
 
 

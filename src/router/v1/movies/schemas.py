@@ -9,6 +9,7 @@ class MovieImageSchema(BaseModel):
     name: str
     path: str
     select_as_title: bool
+    file: str
 
 
 class MovieImageCreateSchema(BaseModel):
