@@ -13,3 +13,5 @@ ImageUploadError = HTTPException(
 AlreadyBookedError = HTTPException(
     status_code=403, detail="This time range is already booked"
 )
+
+AllStaffsAreBusyError = HTTPException(status_code=403, detail="All employers are busy")

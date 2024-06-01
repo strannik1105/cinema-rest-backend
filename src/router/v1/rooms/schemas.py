@@ -24,8 +24,6 @@ class BookingBaseSchema(BaseModel):
     user_sid: UUID
     datetime_start: datetime
     datetime_end: datetime
-    waiter_sid: Optional[UUID]
-    cook_sid: Optional[UUID]
 
 
 class BookingSchema(BookingBaseSchema):

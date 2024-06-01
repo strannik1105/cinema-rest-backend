@@ -23,8 +23,15 @@ class Booking(BaseModel):
 
     cook_sid = mapped_column(ForeignKey("staff.cook.sid"))
 
-    def __init__(self, room_sid, user_sid, datetime_start, datetime_end):
+    def __init__(
+        self, room_sid, user_sid, datetime_start, datetime_end, waiter_sid, cook_sid
+    ):
         self.room_sid = room_sid
         self.user_sid = user_sid
         self.datetime_start = datetime_start
         self.datetime_end = datetime_end
+
+        if waiter_sid is not None:
+            self.waiter_sid = waiter_sid
+        if cook_sid is not None:
+            self.cook_sid = cook_sid

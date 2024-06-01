@@ -94,6 +94,18 @@ def get_food_service() -> FoodService:
     return food_service
 
 
+cook_repository = CookRepository()
+waiter_repository = WaiterRepository()
+
+
+def get_cook_repository() -> CookRepository:
+    return cook_repository
+
+
+def get_waiter_repository() -> WaiterRepository:
+    return waiter_repository
+
+
 room_repository = RoomRepository()
 booking_repository = BookingRepository()
 
@@ -106,20 +118,10 @@ def get_booking_repository() -> BookingRepository:
     return booking_repository
 
 
-booking_service = BookingService(booking_repository, room_repository)
+booking_service = BookingService(
+    booking_repository, room_repository, cook_repository, waiter_repository
+)
 
 
 def get_booking_service() -> BookingService:
     return booking_service
-
-
-cook_repository = CookRepository()
-waiter_repository = WaiterRepository()
-
-
-def get_cook_repository() -> CookRepository:
-    return cook_repository
-
-
-def get_waiter_repository() -> WaiterRepository:
-    return waiter_repository
