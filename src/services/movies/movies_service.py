@@ -12,11 +12,11 @@ class MovieService:
         self._movie_image_repository = movie_image_repository
 
     def create_movie_image(
-            self,
-            db_session,
-            select_as_title: bool,
-            movie_sid: uuid.UUID,
-            image: UploadFile,
+        self,
+        db_session,
+        select_as_title: bool,
+        movie_sid: uuid.UUID,
+        image: UploadFile,
     ):
         filename = image.filename
         file_path = f"{settings.FILE_PATH}/{filename}"
