@@ -18,9 +18,9 @@ router = APIRouter()
 
 @router.get("/", response_model=List[FoodSchema])
 async def get_foods(
-        db: PGSession,
-        food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    db: PGSession,
+    food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
 ):
     db_objs = await crud_service.get_all(db, food_repository)
     return db_objs
@@ -28,10 +28,10 @@ async def get_foods(
 
 @router.get("/{sid}", response_model=FoodSchema)
 async def get_food(
-        db: PGSession,
-        food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид ,k.lf"),
+    db: PGSession,
+    food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид ,k.lf"),
 ):
     db_obj = await crud_service.get_by_sid(db, food_repository, sid)
     return db_obj
@@ -39,10 +39,10 @@ async def get_food(
 
 @router.post("/", response_model=FoodSchema)
 async def create_food(
-        db: PGSession,
-        food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        new_food: FoodBaseSchema,
+    db: PGSession,
+    food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    new_food: FoodBaseSchema,
 ):
     db_obj = await crud_service.create(
         db,
@@ -52,7 +52,7 @@ async def create_food(
             "name": new_food.name,
             "description": new_food.description,
             "price": new_food.price,
-            "recipe": new_food.recipe
+            "recipe": new_food.recipe,
         },
     )
     return db_obj
@@ -60,11 +60,11 @@ async def create_food(
 
 @router.patch("/{sid}", response_model=FoodSchema)
 async def update_food(
-        db: PGSession,
-        food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        updated_obj: FoodUpdateSchema,
-        sid: UUID = Path(description="сид сущности"),
+    db: PGSession,
+    food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    updated_obj: FoodUpdateSchema,
+    sid: UUID = Path(description="сид сущности"),
 ):
     db_obj = await crud_service.update(db, sid, food_repository, updated_obj.__dict__)
     return db_obj
@@ -72,10 +72,10 @@ async def update_food(
 
 @router.delete("/{sid}")
 async def delete(
-        db: PGSession,
-        food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид пользователя"),
+    db: PGSession,
+    food_repository: Annotated[FoodRepository, Depends(get_food_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид пользователя"),
 ):
     await crud_service.delete(db, food_repository, sid)
     return {"msg": "success"}

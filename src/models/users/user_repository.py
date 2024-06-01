@@ -14,4 +14,3 @@ class UserRepository(AbstractRepository[User]):
             select(self._t_model).filter(self._t_model.name == username)
         )
         return obj.scalar()
-

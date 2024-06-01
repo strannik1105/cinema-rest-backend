@@ -12,12 +12,12 @@ class FoodService:
         self._food_image_repository = food_image_repository
 
     def create_food_image(
-            self,
-            db_session,
-            name: str,
-            select_as_title: bool,
-            movie_sid: uuid.UUID,
-            image: UploadFile,
+        self,
+        db_session,
+        name: str,
+        select_as_title: bool,
+        movie_sid: uuid.UUID,
+        image: UploadFile,
     ):
         filename = uuid.uuid4().hex
         file_path = f"{settings.FILE_PATH}/{filename}"

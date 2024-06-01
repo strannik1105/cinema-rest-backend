@@ -18,9 +18,9 @@ router = APIRouter()
 
 @router.get("/", response_model=List[WaiterSchema])
 async def get_all(
-        db: PGSession,
-        repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    db: PGSession,
+    repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
 ):
     db_objs = await crud_service.get_all(db, repository)
     return db_objs
@@ -28,10 +28,10 @@ async def get_all(
 
 @router.get("/{sid}", response_model=WaiterSchema)
 async def get_by_sid(
-        db: PGSession,
-        repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид сущности"),
+    db: PGSession,
+    repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид сущности"),
 ):
     db_obj = await crud_service.get_by_sid(db, repository, sid)
     return db_obj
@@ -39,10 +39,10 @@ async def get_by_sid(
 
 @router.post("/", response_model=WaiterSchema)
 async def create(
-        db: PGSession,
-        repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        new_obj: WaiterBaseSchema,
+    db: PGSession,
+    repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    new_obj: WaiterBaseSchema,
 ):
     db_obj = await crud_service.create(
         db,
@@ -58,11 +58,11 @@ async def create(
 
 @router.patch("/{sid}", response_model=WaiterSchema)
 async def update(
-        db: PGSession,
-        repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        updated_obj: WaiterBaseSchema,
-        sid: UUID = Path(description="сид сущности"),
+    db: PGSession,
+    repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    updated_obj: WaiterBaseSchema,
+    sid: UUID = Path(description="сид сущности"),
 ):
     db_obj = await crud_service.update(db, repository, sid, updated_obj.__dict__)
     return db_obj
@@ -70,10 +70,10 @@ async def update(
 
 @router.delete("/{sid}")
 async def delete(
-        db: PGSession,
-        repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид сущности"),
+    db: PGSession,
+    repository: Annotated[WaiterRepository, Depends(get_waiter_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид сущности"),
 ):
     await crud_service.delete(db, repository, sid)
     return {"msg": "success"}

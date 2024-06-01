@@ -18,9 +18,9 @@ router = APIRouter()
 
 @router.get("/", response_model=List[RoomSchema])
 async def get(
-        db: PGSession,
-        repository: Annotated[RoomRepository, Depends(get_room_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    db: PGSession,
+    repository: Annotated[RoomRepository, Depends(get_room_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
 ):
     db_objs = await crud_service.get_all(db, repository)
     return db_objs
@@ -28,10 +28,10 @@ async def get(
 
 @router.get("/{sid}", response_model=RoomSchema)
 async def get(
-        db: PGSession,
-        repository: Annotated[RoomRepository, Depends(get_room_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид сущности"),
+    db: PGSession,
+    repository: Annotated[RoomRepository, Depends(get_room_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид сущности"),
 ):
     db_obj = await crud_service.get_by_sid(db, repository, sid)
     return db_obj
@@ -39,10 +39,10 @@ async def get(
 
 @router.post("/", response_model=RoomSchema)
 async def create(
-        db: PGSession,
-        repository: Annotated[RoomRepository, Depends(get_room_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        new_obj: RoomBaseSchema,
+    db: PGSession,
+    repository: Annotated[RoomRepository, Depends(get_room_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    new_obj: RoomBaseSchema,
 ):
     db_obj = await crud_service.create(
         db,
@@ -55,7 +55,7 @@ async def create(
             "x": new_obj.x,
             "y": new_obj.y,
             "width": new_obj.width,
-            "height": new_obj.height
+            "height": new_obj.height,
         },
     )
     return db_obj
@@ -63,11 +63,11 @@ async def create(
 
 @router.patch("/{sid}", response_model=RoomSchema)
 async def update(
-        db: PGSession,
-        repository: Annotated[RoomRepository, Depends(get_room_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        updated_obj: RoomBaseSchema,
-        sid: UUID = Path(description="сид сущности"),
+    db: PGSession,
+    repository: Annotated[RoomRepository, Depends(get_room_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    updated_obj: RoomBaseSchema,
+    sid: UUID = Path(description="сид сущности"),
 ):
     db_obj = await crud_service.update(db, repository, sid, updated_obj.__dict__)
     return db_obj
@@ -75,10 +75,10 @@ async def update(
 
 @router.delete("/{sid}")
 async def delete(
-        db: PGSession,
-        repository: Annotated[RoomRepository, Depends(get_room_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид сущности"),
+    db: PGSession,
+    repository: Annotated[RoomRepository, Depends(get_room_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид сущности"),
 ):
     await crud_service.delete(db, repository, sid)
     return {"msg": "success"}

@@ -26,12 +26,12 @@ router = APIRouter()
 
 @router.get("/{sid}", response_model=List[MovieImageSchema])
 async def get_images(
-        db: PGSession,
-        movie_image_repository: Annotated[
-            MovieImageRepository, Depends(get_movie_image_repository)
-        ],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид пользователя"),
+    db: PGSession,
+    movie_image_repository: Annotated[
+        MovieImageRepository, Depends(get_movie_image_repository)
+    ],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид пользователя"),
 ):
     db_objs = await crud_service.get_all(db, movie_image_repository)
     objs_to_repr = []
@@ -44,10 +44,10 @@ async def get_images(
 
 @router.post("/{sid}", response_model=MovieImageSchema)
 async def create_image(
-        db: PGSession,
-        movie_service: Annotated[MovieService, Depends(get_movie_service)],
-        new_movie: MovieImageCreateSchema,
-        sid: UUID = Path(description="сид фильма"),
+    db: PGSession,
+    movie_service: Annotated[MovieService, Depends(get_movie_service)],
+    new_movie: MovieImageCreateSchema,
+    sid: UUID = Path(description="сид фильма"),
 ):
     db_obj = await movie_service.create_movie_image(
         db, new_movie.name, new_movie.select_as_title, sid, new_movie.image
@@ -57,11 +57,11 @@ async def create_image(
 
 @router.put("/{sid}", response_model=user.User)
 async def update(
-        db: PGSession,
-        movie_repository: Annotated[MovieRepository, Depends(get_movie_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        updated_image: MovieImageUpdateSchema,
-        sid: UUID = Path(description="сид"),
+    db: PGSession,
+    movie_repository: Annotated[MovieRepository, Depends(get_movie_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    updated_image: MovieImageUpdateSchema,
+    sid: UUID = Path(description="сид"),
 ):
     db_obj = await crud_service.update(
         db, sid, movie_repository, updated_image.__dict__
@@ -71,10 +71,10 @@ async def update(
 
 @router.delete("/{sid}")
 async def delete(
-        db: PGSession,
-        movie_repository: Annotated[MovieRepository, Depends(get_movie_repository)],
-        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-        sid: UUID = Path(description="сид"),
+    db: PGSession,
+    movie_repository: Annotated[MovieRepository, Depends(get_movie_repository)],
+    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+    sid: UUID = Path(description="сид"),
 ):
     await crud_service.delete(db, movie_repository, sid)
     return {"msg": "success"}

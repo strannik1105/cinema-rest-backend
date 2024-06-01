@@ -39,7 +39,11 @@ async def create_user(
     new_user: user.UserCreate,
 ):
     db_obj = await user_service.create_user(
-        db, new_user.name, new_user.email, auth_utils.hash_password(new_user.password).decode('utf-8'), Role.USER
+        db,
+        new_user.name,
+        new_user.email,
+        auth_utils.hash_password(new_user.password).decode("utf-8"),
+        Role.USER,
     )
     jwt_payload = {
         "username": db_obj.name,

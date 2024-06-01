@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey, DateTime
-from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import mapped_column, relationship
 from common.db.base_model import BaseModel
 
 SCHEMA = "rooms"
@@ -19,6 +19,8 @@ class Booking(BaseModel):
     datetime_end = mapped_column(DateTime, nullable=False)
 
     waiter_sid = mapped_column(ForeignKey("staff.waiter.sid"))
+    # waiter = relationship("Waiter", backref="bookings")
+
     cook_sid = mapped_column(ForeignKey("staff.cook.sid"))
 
     def __init__(self, room_sid, user_sid, datetime_start, datetime_end):
