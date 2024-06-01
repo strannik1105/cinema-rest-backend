@@ -15,3 +15,5 @@ AlreadyBookedError = HTTPException(
 )
 
 AllStaffsAreBusyError = HTTPException(status_code=403, detail="All employers are busy")
+
+TooLowTimeRangeError = HTTPException(status_code=403, detail="Too low time range")

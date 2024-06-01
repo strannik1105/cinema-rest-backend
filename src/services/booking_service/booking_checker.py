@@ -12,7 +12,7 @@ from models.staff.waiter import Waiter
 def check_bookings():
     engine = create_engine(
         f"postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}",
-        pool_pre_ping=True
+        pool_pre_ping=True,
     )
     SessionLocal = sessionmaker(
         autocommit=False,
@@ -24,7 +24,9 @@ def check_bookings():
     bookings = session.query(Booking).all()
     for booking in bookings:
         if booking.datetime_end > datetime.now():
-            waiter = session.query(Waiter).filter(Waiter.sid == booking.waiter_sid).first()
+            waiter = (
+                session.query(Waiter).filter(Waiter.sid == booking.waiter_sid).first()
+            )
             if waiter is None:
                 continue
 
