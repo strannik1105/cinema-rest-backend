@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from threading import Thread
 
 import uvicorn
+
 import settings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,4 +35,4 @@ app.mount("/static", StaticFiles(directory="../static"), name="static")
 app.include_router(api_router)
 
 if __name__ == "__main__":
-    uvicorn.run(app=app, host=settings.HOST, port=settings.PORT)
+    uvicorn.run(app=app, host=settings.HOST, port=8001)
