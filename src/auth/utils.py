@@ -13,10 +13,13 @@ def encode_jwt(
         private_key: str = settings.auth_jwt.private_key_path.read_text(),
         algorithm: str = settings.auth_jwt.algorithm,
 ) -> str:
-    expiration = datetime.utcnow() + EXPIRATION_TIME
-    payload.update({"exp": expiration})
-    token = jwt.encode(payload, private_key, algorithm=algorithm)
-    return token
+    to_encode = payload.copy()
+    expire = datetime.utcnow() + timedelta(minutes=30)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(
+        to_encode, private_key, algorithm
+    )
+    return encoded_jwt
 
 
 def decode_jwt(

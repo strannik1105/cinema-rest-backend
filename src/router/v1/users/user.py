@@ -14,47 +14,6 @@ from services.users.user_service import UserService
 from auth import utils as auth_utils
 
 router = APIRouter()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
-
-
-async def get_current_user(
-        token: str = Depends(oauth2_scheme)
-):
-    decoded_data = auth_utils.decode_jwt(token)
-    if not decoded_data:
-        raise HTTPException(status_code=400, detail="Invalid token")
-    #user = await user_service.get_user_by_sid(db, sid)
-    print(token)
-    print('aaaaa')
-    if not user:
-        raise HTTPException(status_code=400, detail="User not found")
-    return user
-
-
-class PermissionChecker:
-
-    def __init__(self, required_permissions: list[str]) -> None:
-        self.required_permissions = required_permissions
-
-    def __call__(self, user) -> bool:
-        print('aaaa')
-        for r_perm in self.required_permissions:
-            if r_perm not in user.permissions:
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail='Permissions'
-                )
-        return True
-
-
-class User(BaseModel):
-    username: str
-    password: str
-
-
-@router.get("/me")
-async def get_user_me(current_user: User = Depends(get_current_user)):
-    return current_user
 
 
 @router.get("/", response_model=List[user.User])
@@ -119,10 +78,3 @@ async def delete_user(
     await user_service.remove_user(db, sid)
     return {"msg": "success"}
 
-
-@router.get('/users')
-def users(
-        token: str = Depends(oauth2_scheme)
-):
-    print('aaaa')
-    return 'users'

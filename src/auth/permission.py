@@ -1,6 +1,4 @@
-from fastapi import Depends, HTTPException
 from pydantic import BaseModel
-from starlette import status
 
 
 class UserBase(BaseModel):

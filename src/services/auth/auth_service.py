@@ -18,3 +18,10 @@ class AuthService:
             raise UnauthorizedError
 
         return user
+
+    async def get_by_username(self, db_session, username: str):
+        user = await self._auth_repository.get_user_by_username(db_session, username)
+        if not user:
+            raise UnauthorizedError
+
+        return user
