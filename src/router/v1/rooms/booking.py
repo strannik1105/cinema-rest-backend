@@ -23,9 +23,9 @@ router = APIRouter()
 
 @router.get("/", response_model=List[BookingSchema])
 async def get(
-    db: PGSession,
-    repository: Annotated[BookingRepository, Depends(get_booking_repository)],
-    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+        db: PGSession,
+        repository: Annotated[BookingRepository, Depends(get_booking_repository)],
+        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
 ):
     db_objs = await crud_service.get_all(db, repository)
     return db_objs
@@ -33,10 +33,10 @@ async def get(
 
 @router.get("/{sid}", response_model=BookingSchema)
 async def get(
-    db: PGSession,
-    repository: Annotated[BookingRepository, Depends(get_booking_repository)],
-    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-    sid: UUID = Path(description="сид сущности"),
+        db: PGSession,
+        repository: Annotated[BookingRepository, Depends(get_booking_repository)],
+        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+        sid: UUID = Path(description="сид сущности"),
 ):
     db_obj = await crud_service.get_by_sid(db, repository, sid)
     return db_obj
@@ -44,9 +44,9 @@ async def get(
 
 @router.post("/", response_model=BookingSchema)
 async def create(
-    db: PGSession,
-    booking_service: Annotated[BookingService, Depends(get_booking_service)],
-    new_obj: BookingCreateSchema,
+        db: PGSession,
+        booking_service: Annotated[BookingService, Depends(get_booking_service)],
+        new_obj: BookingCreateSchema,
 ):
     db_obj = await booking_service.create_booking(
         db,
@@ -60,10 +60,20 @@ async def create(
 
 @router.delete("/{sid}")
 async def delete(
-    db: PGSession,
-    repository: Annotated[BookingRepository, Depends(get_booking_repository)],
-    crud_service: Annotated[CRUDService, Depends(get_crud_service)],
-    sid: UUID = Path(description="сид сущности"),
+        db: PGSession,
+        repository: Annotated[BookingRepository, Depends(get_booking_repository)],
+        crud_service: Annotated[CRUDService, Depends(get_crud_service)],
+        sid: UUID = Path(description="сид сущности"),
 ):
     await crud_service.delete(db, repository, sid)
     return {"msg": "success"}
+
+
+@router.get("/{sid}/bookings")
+async def get_bookings_by_sid(
+        db: PGSession,
+        service: Annotated[BookingService, Depends(get_booking_service)],
+        sid: UUID = Path(description="сид комнаты")
+):
+    bookings = await service.get_bookings_by_room(db, sid)
+    return bookings

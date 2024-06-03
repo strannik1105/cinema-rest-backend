@@ -1,13 +1,15 @@
 from datetime import datetime, timedelta
 from uuid import UUID
 
+from sqlalchemy import select
+
 from common.exceptions.exceptions import (
     AlreadyBookedError,
     HTTPNotFoundError,
     AllStaffsAreBusyError,
     TooLowTimeRangeError,
 )
-from common.utils import time_in_range, check_for_intersection
+from common.utils import check_for_intersection
 from models.rooms.booking import Booking
 from models.rooms.repository.booking_repository import BookingRepository
 from models.rooms.repository.room_repository import RoomRepository
@@ -18,11 +20,11 @@ from services.booking_service.ext import get_available_staff
 
 class BookingService:
     def __init__(
-        self,
-        booking_repository: BookingRepository,
-        room_repository: RoomRepository,
-        cook_repository: CookRepository,
-        waiter_repository: WaiterRepository,
+            self,
+            booking_repository: BookingRepository,
+            room_repository: RoomRepository,
+            cook_repository: CookRepository,
+            waiter_repository: WaiterRepository,
     ):
         self._booking_repository = booking_repository
         self._room_repository = room_repository
@@ -30,12 +32,12 @@ class BookingService:
         self._waiter_repository = waiter_repository
 
     async def create_booking(
-        self,
-        db_session,
-        room_sid: UUID,
-        user_sid: UUID,
-        datetime_start: datetime,
-        datetime_end: datetime,
+            self,
+            db_session,
+            room_sid: UUID,
+            user_sid: UUID,
+            datetime_start: datetime,
+            datetime_end: datetime,
     ):
         if datetime_end - datetime_start < timedelta(hours=2):
             raise TooLowTimeRangeError
@@ -49,8 +51,8 @@ class BookingService:
         for booking in db_bookings:
             if booking.room_sid == room_sid:
                 if check_for_intersection(
-                    (datetime_start, datetime_end),
-                    (booking.datetime_start, booking.datetime_end),
+                        (datetime_start, datetime_end),
+                        (booking.datetime_start, booking.datetime_end),
                 ):
                     raise AlreadyBookedError
 
@@ -74,3 +76,7 @@ class BookingService:
         await db_session.commit()
 
         return booking
+
+    async def get_bookings_by_room(self, db_session, room_sid):
+        bookings = await db_session.execute(select(Booking).filter(Booking.room_sid == room_sid))
+        return list(bookings.scalars().all())
