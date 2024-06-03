@@ -7,7 +7,7 @@ from common.exceptions.exceptions import (
     AllStaffsAreBusyError,
     TooLowTimeRangeError,
 )
-from common.utils import time_in_range
+from common.utils import time_in_range, check_for_intersection
 from models.rooms.booking import Booking
 from models.rooms.repository.booking_repository import BookingRepository
 from models.rooms.repository.room_repository import RoomRepository
@@ -48,10 +48,9 @@ class BookingService:
 
         for booking in db_bookings:
             if booking.room_sid == room_sid:
-                if time_in_range(
-                    booking.datetime_start, booking.datetime_end, datetime_start
-                ) and time_in_range(
-                    booking.datetime_start, booking.datetime_end, datetime_end
+                if check_for_intersection(
+                    (datetime_start, datetime_end),
+                    (booking.datetime_start, booking.datetime_end),
                 ):
                     raise AlreadyBookedError
 
