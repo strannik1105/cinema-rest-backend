@@ -1,7 +1,10 @@
 from typing import List, Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Path
+from fastapi import APIRouter, Depends, Path, HTTPException
+from fastapi.security import OAuth2PasswordBearer
+from pydantic import BaseModel
+from starlette import status
 
 from common.enums.enums import Role
 from models.users.schemas import user
@@ -15,8 +18,8 @@ router = APIRouter()
 
 @router.get("/", response_model=List[user.User])
 async def get_users(
-    db: PGSession,
-    user_service: Annotated[UserService, Depends(get_user_service)],
+        db: PGSession,
+        user_service: Annotated[UserService, Depends(get_user_service)],
 ):
     db_objs = await user_service.get_all_users(db)
     return db_objs
@@ -24,9 +27,9 @@ async def get_users(
 
 @router.get("/{sid}", response_model=user.User)
 async def get_user(
-    db: PGSession,
-    user_service: Annotated[UserService, Depends(get_user_service)],
-    sid: UUID = Path(description="сид пользователя"),
+        db: PGSession,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        sid: UUID = Path(description="сид пользователя"),
 ):
     db_obj = await user_service.get_user_by_sid(db, sid)
     return db_obj
@@ -34,9 +37,9 @@ async def get_user(
 
 @router.post("/", response_model=TokenInfo)
 async def create_user(
-    db: PGSession,
-    user_service: Annotated[UserService, Depends(get_user_service)],
-    new_user: user.UserCreate,
+        db: PGSession,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        new_user: user.UserCreate,
 ):
     db_obj = await user_service.create_user(
         db,
@@ -57,10 +60,10 @@ async def create_user(
 
 @router.put("/{sid}", response_model=user.User)
 async def update_user(
-    db: PGSession,
-    user_service: Annotated[UserService, Depends(get_user_service)],
-    updated_user: user.UserUpdate,
-    sid: UUID = Path(description="сид пользователя"),
+        db: PGSession,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        updated_user: user.UserUpdate,
+        sid: UUID = Path(description="сид пользователя"),
 ):
     db_obj = await user_service.update_user(db, sid, updated_user.__dict__)
     return db_obj
@@ -68,9 +71,10 @@ async def update_user(
 
 @router.delete("/{sid}")
 async def delete_user(
-    db: PGSession,
-    user_service: Annotated[UserService, Depends(get_user_service)],
-    sid: UUID = Path(description="сид пользователя"),
+        db: PGSession,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        sid: UUID = Path(description="сид пользователя"),
 ):
     await user_service.remove_user(db, sid)
     return {"msg": "success"}
+
