@@ -119,7 +119,11 @@ def get_booking_repository() -> BookingRepository:
 
 
 booking_service = BookingService(
-    booking_repository, room_repository, cook_repository, waiter_repository
+    booking_repository,
+    room_repository,
+    cook_repository,
+    waiter_repository,
+    user_repository,
 )
 
 

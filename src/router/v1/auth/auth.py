@@ -8,8 +8,12 @@ from jose import ExpiredSignatureError, JWTError
 
 import settings
 from auth.utils import encode_jwt, decode_jwt
-from common.exceptions.exceptions import TokenExpiredException, IncorrectTokenFormatException, \
-    UserIsNotPresentException, TokenAbsentException
+from common.exceptions.exceptions import (
+    TokenExpiredException,
+    IncorrectTokenFormatException,
+    UserIsNotPresentException,
+    TokenAbsentException,
+)
 from models.users import User
 from router.deps import PGSession, get_auth_service
 from router.v1.auth.schemas import TokenInfo
@@ -28,14 +32,12 @@ def get_token(request: Request):
 
 
 async def get_current_user(
-        db: PGSession,
-        auth_service: Annotated[AuthService, Depends(get_auth_service)],
-        token: str = Depends(get_token)
+    db: PGSession,
+    auth_service: Annotated[AuthService, Depends(get_auth_service)],
+    token: str = Depends(get_token),
 ):
     try:
-        payload = decode_jwt(
-            token
-        )
+        payload = decode_jwt(token)
 
     except ExpiredSignatureError:
         raise TokenExpiredException
@@ -55,11 +57,11 @@ async def get_current_user(
 
 @router.post("/token", response_model=TokenInfo)
 async def authenticate_user(
-        db: PGSession,
-        auth_service: Annotated[AuthService, Depends(get_auth_service)],
-        username: str,
-        password: str,
-        response: Response,
+    db: PGSession,
+    auth_service: Annotated[AuthService, Depends(get_auth_service)],
+    username: str,
+    password: str,
+    response: Response,
 ):
     db_obj = await auth_service.authenticate(db, username, password)
 

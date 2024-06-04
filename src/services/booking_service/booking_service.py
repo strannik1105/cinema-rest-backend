@@ -15,6 +15,7 @@ from models.rooms.repository.booking_repository import BookingRepository
 from models.rooms.repository.room_repository import RoomRepository
 from models.staff.repository.cook_repository import CookRepository
 from models.staff.repository.waiter_repository import WaiterRepository
+from models.users.user_repository import UserRepository
 from services.booking_service.ext import get_available_cook, get_available_waiter
 
 
@@ -25,11 +26,13 @@ class BookingService:
         room_repository: RoomRepository,
         cook_repository: CookRepository,
         waiter_repository: WaiterRepository,
+        user_repository: UserRepository,
     ):
         self._booking_repository = booking_repository
         self._room_repository = room_repository
         self._cook_repository = cook_repository
         self._waiter_repository = waiter_repository
+        self._user_repository = user_repository
 
     async def create_booking(
         self,
@@ -83,7 +86,21 @@ class BookingService:
         return booking
 
     async def get_bookings_by_room(self, db_session, room_sid):
+        room_db = await self._room_repository.get(db_session, room_sid)
+        if room_db is None:
+            raise HTTPNotFoundError
+
         bookings = await db_session.execute(
             select(Booking).filter(Booking.room_sid == room_sid)
+        )
+        return list(bookings.scalars().all())
+
+    async def get_bookings_by_user(self, db_session, user_sid):
+        user_db = await self._user_repository.get(db_session, user_sid)
+        if user_db is None:
+            raise HTTPNotFoundError
+
+        bookings = await db_session.execute(
+            select(Booking).filter(Booking.user_sid == user_sid)
         )
         return list(bookings.scalars().all())

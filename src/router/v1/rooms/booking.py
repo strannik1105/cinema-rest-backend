@@ -69,11 +69,21 @@ async def delete(
     return {"msg": "success"}
 
 
-@router.get("/{sid}/bookings")
-async def get_bookings_by_sid(
+@router.get("/{sid}/by/room")
+async def get_bookings_by_room_sid(
     db: PGSession,
     service: Annotated[BookingService, Depends(get_booking_service)],
     sid: UUID = Path(description="сид комнаты"),
 ):
     bookings = await service.get_bookings_by_room(db, sid)
+    return bookings
+
+
+@router.get("/{sid}/by/user")
+async def get_bookings_by_user_sid(
+    db: PGSession,
+    service: Annotated[BookingService, Depends(get_booking_service)],
+    sid: UUID = Path(description="сид пользователя"),
+):
+    bookings = await service.get_bookings_by_user(db, sid)
     return bookings

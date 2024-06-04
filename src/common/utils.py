@@ -10,7 +10,7 @@ def time_in_range(start, end, x):
 
 
 def check_for_intersection(
-        _interval1: tuple[datetime, datetime], _interval2: tuple[datetime, datetime]
+    _interval1: tuple[datetime, datetime], _interval2: tuple[datetime, datetime]
 ) -> bool:
     interval1 = (_interval1[0].timestamp(), _interval1[1].timestamp())
     interval2 = (_interval2[0].timestamp(), _interval2[1].timestamp())
