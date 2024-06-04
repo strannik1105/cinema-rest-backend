@@ -46,7 +46,7 @@ async def get_images(
     return objs_to_repr
 
 
-@router.post("/{sid}", response_model=MovieImageSchema)
+@router.post("/{sid}")
 async def create_image(
     db: PGSession,
     movie_service: Annotated[MovieService, Depends(get_movie_service)],

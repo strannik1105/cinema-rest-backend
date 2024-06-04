@@ -7,6 +7,7 @@ from pydantic import BaseModel, EmailStr
 class UserBase(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
+    role: str
 
 
 class User(UserBase):

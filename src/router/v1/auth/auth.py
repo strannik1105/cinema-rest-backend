@@ -55,13 +55,13 @@ async def get_current_user(
     return user
 
 
-@router.post("/token", response_model=TokenInfo)
+@router.post("/token")
 async def authenticate_user(
-    db: PGSession,
-    auth_service: Annotated[AuthService, Depends(get_auth_service)],
-    username: str,
-    password: str,
-    response: Response,
+        db: PGSession,
+        auth_service: Annotated[AuthService, Depends(get_auth_service)],
+        username: str,
+        password: str,
+        response: Response,
 ):
     db_obj = await auth_service.authenticate(db, username, password)
 
@@ -76,7 +76,7 @@ async def authenticate_user(
     access_token = encode_jwt({"sub": str(db_obj.name)})
     response.set_cookie("booking_access_token", access_token, httponly=True)
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user_role": db_obj.role, "user_sid": db_obj.sid}
 
 
 @router.get("/me")
