@@ -97,7 +97,7 @@ def upgrade() -> None:
         sa.Column("name", sa.String(), nullable=False),
         sa.Column("email", sa.String(), nullable=False),
         sa.Column("password", sa.String(), nullable=False),
-        sa.Column("role", sa.Enum("ADMIN", "USER", name="role"), nullable=True),
+        sa.Column("role", sa.Enum("ADMIN", "USER", "WORKER", name="role"), nullable=True),
         sa.Column("sid", sa.UUID(), nullable=False),
         sa.PrimaryKeyConstraint("sid"),
         schema="users",
