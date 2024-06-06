@@ -46,7 +46,7 @@ async def create_user(
         new_user.name,
         new_user.email,
         auth_utils.hash_password(new_user.password).decode("utf-8"),
-        Role.USER,
+        new_user.role,
     )
 
     access_token = encode_jwt({"sub": str(db_obj.name)})
