@@ -26,6 +26,8 @@ class MovieBaseSchema(BaseModel):
     name: str
     description: Optional[str]
     genre: Optional[str]
+    year: Optional[int]
+    duration: Optional[int]
 
 
 class MovieSchema(MovieBaseSchema):
@@ -36,3 +38,5 @@ class MovieUpdateSchema(BaseModel):
     name: Optional[str]
     description: Optional[str]
     genre: Optional[str]
+    year: Optional[int]
+    duration: Optional[int]

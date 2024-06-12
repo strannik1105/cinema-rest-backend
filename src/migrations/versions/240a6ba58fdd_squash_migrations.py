@@ -44,6 +44,8 @@ def upgrade() -> None:
         sa.Column("description", sa.String(), nullable=False),
         sa.Column("genre", sa.String(), nullable=True),
         sa.Column("sid", sa.UUID(), nullable=False),
+        sa.Column("year", sa.Integer, nullable=True),
+        sa.Column("duration", sa.Integer, nullable=True),
         sa.PrimaryKeyConstraint("sid"),
         schema="movies",
         comment="Table with all users",

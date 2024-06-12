@@ -1,4 +1,4 @@
-from sqlalchemy import String
+from sqlalchemy import String, Integer
 from sqlalchemy.orm import mapped_column
 from common.db.base_model import BaseModel
 
@@ -16,8 +16,12 @@ class Movie(BaseModel):
     name = mapped_column(String, nullable=False)
     description = mapped_column(String, nullable=False)
     genre = mapped_column(String)
+    year = mapped_column(Integer)
+    duration = mapped_column(Integer)
 
-    def __init__(self, name, description, genre):
+    def __init__(self, name, description, genre, year, duration):
         self.name = name
         self.description = description
         self.genre = genre
+        self.year = year
+        self.duration = duration
