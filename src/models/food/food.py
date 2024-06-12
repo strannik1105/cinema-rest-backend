@@ -17,9 +17,11 @@ class Food(BaseModel):
     description = mapped_column(String, nullable=False)
     price = mapped_column(Float, nullable=False)
     recipe = mapped_column(String, nullable=True)
+    type_ = mapped_column(String, nullable=True)
 
-    def __init__(self, name, description, price, recipe):
+    def __init__(self, name, description, price, recipe, type_):
         self.name = name
         self.description = description
         self.price = price
         self.recipe = recipe
+        self.type_ = type_

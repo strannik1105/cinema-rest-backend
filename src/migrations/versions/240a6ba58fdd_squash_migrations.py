@@ -31,6 +31,7 @@ def upgrade() -> None:
         sa.Column("price", sa.Float(), nullable=False),
         sa.Column("recipe", sa.String(), nullable=True),
         sa.Column("sid", sa.UUID(), nullable=False),
+        sa.Column("type_", sa.String, nullable=True),
         sa.PrimaryKeyConstraint("sid"),
         schema="food",
         comment="Table with all users",
@@ -215,6 +216,7 @@ def downgrade() -> None:
     op.drop_index(op.f("ix_food_food_sid"), table_name="food", schema="food")
     op.drop_table("food", schema="food")
 
+    op.execute("DROP TYPE role")
     op.execute("DROP SCHEMA food")
     op.execute("DROP SCHEMA movies")
     op.execute("DROP SCHEMA rooms")

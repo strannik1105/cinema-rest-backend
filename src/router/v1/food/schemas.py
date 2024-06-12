@@ -2,7 +2,7 @@ from typing import Optional
 from uuid import UUID
 
 from fastapi import UploadFile, File
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class FoodImageSchema(BaseModel):
@@ -27,6 +27,7 @@ class FoodBaseSchema(BaseModel):
     description: Optional[str]
     price: Optional[float]
     recipe: Optional[str]
+    type_: Optional[str]
 
 
 class FoodSchema(FoodBaseSchema):
@@ -38,3 +39,4 @@ class FoodUpdateSchema(BaseModel):
     description: Optional[str]
     price: Optional[float]
     recipe: Optional[str]
+    type_: Optional[str]

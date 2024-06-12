@@ -5,7 +5,6 @@ from fastapi import APIRouter, Depends, Path, Query
 
 from models.movies import Movie
 from models.movies.repository.movie_repository import MovieRepository
-from models.users.schemas import user
 from router.deps import (
     PGSession,
     get_crud_service,
