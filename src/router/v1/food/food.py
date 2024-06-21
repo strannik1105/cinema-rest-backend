@@ -33,7 +33,7 @@ async def get_foods(
 
         objs.append(db_obj)
 
-    return db_objs
+    return objs
 
 
 @router.get("/{sid}", response_model=FoodSchema)
