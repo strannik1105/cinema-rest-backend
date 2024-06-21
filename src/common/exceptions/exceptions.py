@@ -9,23 +9,23 @@ class BookingException(HTTPException):
         super().__init__(status_code=self.status_code, detail=self.detail)
 
 
-HTTPNotFoundError = HTTPException(status_code=404, detail="Item not found")
+HTTPNotFoundError = HTTPException(status_code=404, detail="Не найдено")
 
 UnauthorizedError = HTTPException(
-    status_code=401, detail="invalid username or password"
+    status_code=401, detail="Неверное имя либо пароль"
 )
 
 ImageUploadError = HTTPException(
-    status_code=403, detail="Some troubles with image uploading"
+    status_code=403, detail="возникли пробемы связанные с загрузкой изображения"
 )
 
 AlreadyBookedError = HTTPException(
-    status_code=403, detail="This time range is already booked"
+    status_code=403, detail="Этот временной интервал уже занят"
 )
 
-AllStaffsAreBusyError = HTTPException(status_code=403, detail="All employers are busy")
+AllStaffsAreBusyError = HTTPException(status_code=403, detail="Все сотрудники уже заняты")
 
-TooLowTimeRangeError = HTTPException(status_code=403, detail="Too low time range")
+TooLowTimeRangeError = HTTPException(status_code=403, detail="Выбран слишком малый интервал")
 
 
 class UserAlreadyExistsException(BookingException):
